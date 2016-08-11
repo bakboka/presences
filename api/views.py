@@ -79,7 +79,7 @@ class ClassRoomDetail(generics.RetrieveUpdateDestroyAPIView):
 class Queue(APIView):
     def get(self, request, id):
         queue = Question.objects.all().filter(local_id=id)
-        return JsonResponse(serialize('python', queue), safe=False)  # TODO return a Response from django rest api
+        return Response(QuestionSerializer(queue, many=True).data)
 
     def delete(self, request, id):
         Question.objects.all().filter(local_id=id).delete()

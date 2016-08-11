@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'guidance.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-with open('guidance/database.json') as data_file:    
+with open('guidance/database.json') as data_file:
     DATABASES = json.load(data_file)
 
 

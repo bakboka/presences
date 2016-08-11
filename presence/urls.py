@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^signin$',views.sign_in,name='sign_in'),
     url(r'^logout$',views.log_out,name='log_out'),
     url(r'^pwdchange$',auth_views.password_change),
-    url(r'assistant',views.assistant,name='assistant'),
-    url(r'queue',views.queue,name='queue'),
-    url(r'register',views.register,name='register')
+    url(r'^assistant',views.assistant,name='assistant'),
+    url(r'^queue',views.queue,name='queue'),
+    url(r'^register',views.register,name='register')
 ]
