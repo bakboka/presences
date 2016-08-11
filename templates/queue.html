@@ -1,0 +1,55 @@
+ {% extends 'base.html' %}
+ {% block content %}
+ {% load bootstrap3 %}
+     <div ng-app="queue" ng-controller="QueueController" ng-cloak>
+     {% if auth %}
+        <div id="service">
+            <div class="row centered" style="margin-top: 40px;">
+                <div class="col-md-4 ">
+                </div>
+                <div class="col-md-4 ">
+                    <h1> S'inscrire dans la file d'attente</h1>
+                    <form name="questionForm" method="POST" class="form-horizontal" role="form" style="margin-left: 20px;" ng-if="!success && !error" ng-submit="submitQuestion(questionForm.$valid)">{% csrf_token %}
+                        <div class="form-group">
+                            <ui-select ng-model="question.student" theme="selectize" style="min-width: 300px;" title="Choose a person" required>
+                            <ui-select-match placeholder="Choisissez votre nom">{[{$select.selected.first_name}]} {[{$select.selected.last_name}]}</ui-select-match>
+                            <ui-select-choices repeat="student in students | filter: $select.search">
+                                {[{student.first_name}]} {[{student.last_name}]}
+                                <small>
+                                    cursus: {[{student.cursus}]}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                        </div>
+                        <div class="form-group">
+                            <select ng-model="question.local" class="form-control" required>
+                              <option ng-repeat="room in classrooms" ng-value="room.id">{[{ room.name }]} </option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" ng-disabled="questionForm.$invalid">Valider</button>
+                    </form>
+                    <h3 ng-if="success"> Enregistré !</h3>
+                    <h3 ng-if="error"> Une erreur est survenue. </h3>
+                    <p ng-if="error"> Etes-vous déjà inscrit? </p>
+                </div>
+             </div> <!-- row -->
+         </div> <!-- service -->
+     {% endif %}
+    <div id="blue">
+	 	<div class="container centered">
+	 		<div class="row">
+	 			<div class="col-lg-8 col-lg-offset-2" ng-repeat="classroom in classrooms track by $index">
+                    <h3>Salle {[{classroom.name}]}</h3>
+                    <h3 ng-show="!socrate.length">Personne dans la file</h3>
+                    <table class="table">
+                        <thead ng-if="questions[$index]"><tr><td><strong>Nom</strong></td><td><strong>Heure de commencement</strong></td></tr></thead>
+                        <tbody>
+                            <tr ng-repeat="question in questions[$index]"><td>{[{ question.fields.student }]}</td><td>{[{ question.fields.created_at }]}</td></tr>
+                        </tbody>
+                    </table>
+	 			</div>
+	 		</div><! --/row -->
+	 	</div><! --/container -->
+	 </div><! --/twrap -->
+    </div>
+ {% endblock %}

@@ -1,0 +1,45 @@
+ {% extends 'base.html' %}
+ {% block content %}
+     {% load bootstrap3 %}
+
+    <div id="service">
+	 	<div class="container">
+            <div class="row centered">
+                 <div class="col-md-12">
+                    <h1> Bienvenue sur le site des Guidances </h1>
+                     <h3>Prise de présences et files d'attente</h3>
+                </div>
+            </div>
+            <div class="row centered" style="margin-top: 40px;"/>
+ 			<div class="row centered">
+ 				<div class="col-md-4">
+ 					<h4>File d'attente</h4>
+ 					<p>Ici pour vous les listes d'attente des guidances informatiques?</p>
+ 					<p><br/><a href="{% url "queue" %}" class="btn btn-theme">Liste</a></p>
+ 				</div>
+ 				<div class="col-md-4">
+ 					<h4>Présence</h4>
+ 					<p>La prise de présence se fait sur un ordinateur dédié dans le local des guidances. Rendez vous dans le local et demandez à un assistant comment vous inscrire</p>
+ 				    <p><br/><a href="#headerwrap" class="btn btn-theme">Horaire</a></p>
+                </div>
+ 				<div class="col-md-4">
+ 					<h4>Assistants</h4>
+ 					<p>Assistant voulant activer les présences ou gérer les files d'attentes? Connectez vous ici</p>
+ 					<p><br/><a href="{% url "log_in" %}" class="btn btn-theme">Connexion</a></p>
+ 				</div>
+	 		</div>
+	 	</div><! --/container -->
+	 </div><! --/service -->
+    <div id="headerwrap">
+	    <div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<h1>Horaire des guidances</h1>
+				</div>
+				<div class="col-lg-8 col-lg-offset-2 himg">
+					<img src="/static/img/Horaire.png" class="img-responsive">
+				</div>
+			</div><!-- /row -->
+	    </div> <!-- /container -->
+	</div><!-- /headerwrap -->
+ {% endblock %}

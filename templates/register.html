@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load bootstrap3 %}
+<div class="container" ng-app="register" ng-cloak ng-controller="MainController">
+    <div class="row centered" style="margin-top: 80px;"/>
+    <div class="row">
+        <div class="col-sm-4 col-lg-offset-1">
+            <div class="form-box">
+                <div class="form-top">
+                    <div class="form-top-left">
+                        <h3>Créer un compte</h3>
+                        <p>Première fois en guidance? Créez un compte</p>
+                    </div>
+                    <div class="form-top-right">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+                </div>
+                <div class="form-bottom">
+                    <form class="registration-form" name="userForm" ng-submit="submitRegister(userForm.$valid)" ng-if="!successUser && !errorUser">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="sr-only" for="form-first-name">Prénom</label>
+                            <input type="text" name="firstName" placeholder="Prénom..." class="form-first-name form-control" ng-model="user.first_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="form-last-name">Nom de famille</label>
+                            <input type="text" name ="lastName" placeholder="Nom de famille..." class="form-last-name form-control" ng-model="user.last_name" required>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="cursus" ng-model="user.cursus">
+                                <option>B1-IRCI</option>
+                                <option>B1-IRAR</option>
+                                <option>B-IRCI</option>
+                                <option>B-IRAR</option>
+                                <option>B1-INGE</option>
+                                <option>B-INGE</option>
+                                <option>B1-IRBI</option>
+                                <option>B-IRBI</option>
+                                <option>B-INFO</option>
+                                <option>Autre</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Inscription!</button>
+                    </form>
+                    <h3 ng-if="successUser"> Compte créé !</h3>
+                    <h3 ng-if="errorUser"> Une erreur est survenue. Veuillez réessayer. </h3>
+                    <p ng-if="errorUser"> Vérifiez que votre compte n'existe pas déjà. </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-lg-offset-2" >
+            <div class="form-box" ng-init="refreshStudents()">
+                <div class="form-top">
+                    <div class="form-top-left">
+                        <h3>Présence</h3>
+                        <p>Completez le formulaire ci dessous</p>
+                    </div>
+                    <div class="form-top-right">
+                        <i class="glyphicon glyphicon-list-alt"></i>
+                    </div>
+                </div>
+                <div class="form-bottom">
+                    <form role="form" class="registration-form" name="presenceForm" ng-submit="submitPresence(presenceForm.$valid)" ng-if="!successP && !errorP">
+                        <div class="form-group">
+                            <ui-select ng-model="presence.student" theme="selectize" style="min-width: 300px;" title="Choose a person" required>
+                            <ui-select-match placeholder="Choisissez votre nom">{[{$select.selected.first_name}]} {[{$select.selected.last_name}]}</ui-select-match>
+                            <ui-select-choices repeat="student in students | filter: $select.search">
+                                {[{student.first_name}]} {[{student.last_name}]}
+                                <small>
+                                    cursus: {[{student.cursus}]}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                        </div>
+                        <div class="form-group">
+                            <ul class="list-group">
+                                <div ng-repeat="course in courses track by $index">
+                                    <li class="list-group-item list-group-item-info" ng-show="selected==$index">{[{course.name}]}</li>
+                                    <li class="list-group-item" ng-click="setCourse(course.id, $index)" ng-show="selected!=$index">{[{course.name}]}</li>
+                                </div>
+                            </ul>
+                        </div>
+                        <button type="submit" class="btn btn-primary" ng-disabled="presenceForm.$invalid || !presence.course">Valider</button>
+                    </form>
+                    <h3 ng-if="successP"> Enregistré !</h3>
+                    <h3 ng-if="errorP"> Une erreur est survenue. </h3>
+                    <p ng-if="errorP"> Etes-vous déjà inscrit? </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

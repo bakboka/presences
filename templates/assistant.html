@@ -1,0 +1,53 @@
+ {% extends 'base.html' %}
+ {% block content %}
+{% load bootstrap3 %}
+    <div class="container mtb" ng-app="assistant" ng-controller="AssistantController" ng-cloak>
+        <div class="row centered">
+                 <div class="col-md-12">
+                    <h1> Page des élèves-assistants </h1>
+                </div>
+            </div>
+	 	<div class="row" style="margin-top: 40px;">
+	 		<div class="col-lg-4">
+	 			<h4>Prise de presences</h4>
+                <p>Pour aller à la page de prise des présences, cliquez sur le bouton ci dessous ou sur home dans la bar des menu.</p>
+	 		    <p><br/><a href="{% url "register" %}" class="btn btn-theme">Présences</a></p>
+            </div>
+            <div class="col-lg-4">
+                <h4>Effacer les liste d'attente</h4>
+                <form method="POST" name="wipeForm" class="form-horizontal" role="form" name="salle" ng-submit="submitWipe(wipeForm.$valid)" style="margin-left: 20px;">{% csrf_token %}
+                    <div class="radio" ng-repeat="room in classrooms">
+                        <label>
+                            <input type="radio" ng-model="wipe[0]" ng-value="room.id" ng-required="!wipe[0]"> {[{room.name}]}
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" ng-disabled="wipeForm.$invalid">Valider</button>
+                </form>
+            </div>
+	 		<div class="col-lg-4">
+		 		<h4>Personne en guidance?</h4>
+                <form method="POST" name="nobodyForm" class="form-horizontal" role="form" ng-submit="submitNobody(nobodyForm.$valid)" style="margin-left: 20px;">{% csrf_token %}
+                    <div class="radio" ng-repeat="course in courses">
+                        <label>
+                            <input type="radio" ng-model="nobody[0]" ng-value="course.id" ng-required="!nobody[0]"> {[{course.name}]}
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" ng-disabled="nobodyForm.$invalid">Valider</button>
+                </form>
+	 		</div>
+	 	</div><! --/row -->
+        <div class="row">
+            <div class="col-lg-4" ng-repeat="room in classrooms track by $index">
+                <h3>Salle {[{room.name}]}</h3>
+                <form method="POST"  class="form-horizontal" role="form" ng-submit="submitForm($index)" style="margin-left: 20px;">{% csrf_token %}
+                    <div class="radio" ng-repeat="question in questions[$index] track by $index">
+                        <label>
+                            <input type="radio" ng-model="delete[$index]" ng-value="question.pk"> {[{question.fields.student}]}
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" ng-disabled="!delete[$index]">Valider</button>
+                </form>
+            </div>
+        </div>
+	</div><! --/container -->
+ {% endblock %}
