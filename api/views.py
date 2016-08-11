@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 
 
 class StudentList(generics.ListCreateAPIView):
+    # do not show "personne en guidance" which must be the first entry
     queryset = Student.objects.all().exclude(id=1)
     model = Student
     serializer_class = StudentSerializer

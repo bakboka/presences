@@ -49,7 +49,6 @@ def queue(request):
         ip_int = [int(i) for i in ip.split('.')]
     if (ip_int is not None and ip_int[-1] >= 131 and ip_int[-1] <= 195 and ip_int[0] == 164 and ip_int[1] == 15 and \
         ip_int[2] == 81) or request.user.is_authenticated():
-        # we have a real, public ip address for user
         auth = True
     else:
         auth = False

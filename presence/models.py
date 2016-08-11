@@ -29,7 +29,7 @@ class Course(models.Model):
 
 class Presence(models.Model):
     student = models.ForeignKey('Student')
-    created_at = models.DateField(default=date.today)  # auto_now_add=True
+    created_at = models.DateField(default=date.today)
     course = models.ForeignKey('Course')
 
     def __unicode__(self):
