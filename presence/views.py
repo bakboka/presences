@@ -4,7 +4,6 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from ipware.ip import get_real_ip
 from .forms import LogInForm
-import iptools
 
 
 def log_in(request):

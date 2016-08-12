@@ -4,3 +4,4 @@ django-ipware
 djangorestframework
 django-cors-headers
 drf-nested-routers
+MySQL-python
